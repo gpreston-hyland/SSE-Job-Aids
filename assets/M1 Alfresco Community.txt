@@ -1,0 +1,253 @@
+Following https://gist.github.com/howkymike/d2ad4e81298e2408511a14cb731441c3 initially.
+
+
+Starting Point
+Apache Maven 3.8.6 (84538c9988a25aec085021c365c560670ad80f63)
+Maven home: /Users/Galen.Preston/tools/apache-maven-3.8.6
+Java version: 11.0.16, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk-11.0.16.jdk/Contents/Home
+Default locale: en_US, platform encoding: UTF-8
+OS name: "mac os x", version: "12.6", arch: "aarch64", family: "mac"
+
+Configure docker desktop with 4 CPUs and 16 GB RAM for resources
+
+
+
+
+alfresco-docker-base-java
+############################
+#Build base java image used by alfresco images.  https://github.com/Alfresco/alfresco-docker-base-java
+git clone git@github.com:Alfresco/alfresco-docker-base-java.git
+cd alfresco-docker-base-java
+Edit Dockerfile
+
+#FROM centos:7.9.2009 AS centos7
+FROM arm64v8/centos:7.9.2009 AS centos7
+
+docker build -t alfresco-base-java-arm64 . --build-arg DISTRIB_NAME=centos --build-arg DISTRIB_MAJOR=7 --build-arg JAVA_MAJOR=11 \ 
+	--build-arg JDIST=jdk --no-cache --target JAVA_BASE_IMAGE
+cd ..
+
+
+alfresco-docker-base-tomcat
+############################
+#Build base tomcat image.  https://github.com/Alfresco/alfresco-docker-base-tomcat
+git clone git@github.com:Alfresco/alfresco-docker-base-tomcat.git
+cd alfresco-docker-base-tomcat
+#edit Dockerfile
+
+#FROM quay.io/alfresco/alfresco-base-java:jre${JAVA_MAJOR}-${DISTRIB_NAME}${DISTRIB_MAJOR} AS base
+FROM alfresco-base-java-arm64 AS base
+
+#make -j "$(nproc)"; \
+make ; \
+
+#FROM quay.io/alfresco/alfresco-base-java:${JDIST}${JAVA_MAJOR}-${DISTRIB_NAME}${DISTRIB_MAJOR} AS TOMCAT_BASE_IMAGE
+FROM alfresco-base-java-arm64 AS TOMCAT_BASE_IMAGE
+
+#original article has TOMCAT_MAJOR=10. No support in the Dockerfile for it so back it to 9
+docker build -t alfresco-base-tomcat-arm64 . --build-arg DISTRIB_NAME=centos --build-arg DISTRIB_MAJOR=7 --build-arg JAVA_MAJOR=11 \ 
+	--build-arg TOMCAT_MAJOR=9  --no-cache
+cd ..
+
+
+alfresco-community-share
+############################
+# Share
+git clone git@github.com:Alfresco/alfresco-community-share.git
+git checkout 14.96
+cd alfresco-community-share
+mvn clean install -DskipTests
+cd packaging/docker
+
+###Edit dockerfile
+## Remove LABEL line from Dockerfile
+
+#FROM alfresco/alfresco-base-tomcat:tomcat9-jre11-centos7-202203091924
+FROM alfresco-base-tomcat-arm64
+
+docker buildx build . --load --platform linux/arm64 -t alfresco-share-arm64
+cd ../../..
+
+
+rest-api-explorer
+############################
+#api explorer
+#API Explorer
+git clone git@github.com:Alfresco/rest-api-explorer.git
+cd rest-api-explorer
+git checkout 7.2.0 
+mvn clean install -DskipTests
+cd ..
+
+
+alfresco-community-repo
+############################
+# Alfresco Content Repository Community
+git clone git@github.com:Alfresco/alfresco-community-repo.git
+cd alfresco-community-repo
+git checkout 14.145
+mvn clean install -DskipTests
+
+##Copy the api-explorer war into the packaging
+cp ../rest-api-explorer/target/api-explorer.war packaging/docker-alfresco/target/war
+##Copy Share services amp to distribution
+cp ./amps/share-services/target/alfresco-share-services-14.145.amp packaging/docker-alfresco/target/amps
+
+cd packaging/docker-alfresco
+##Edit Dockerfile
+
+#FROM alfresco/alfresco-base-tomcat:tomcat9-jre11-centos7-202203091924
+FROM alfresco-base-tomcat-arm64
+
+##Right before the ENTRYPOINT directive add:
+###Added for arm64
+RUN chgrp -R alfresco ${TOMCAT_DIR}/webapps ${TOMCAT_DIR}/amps ${TOMCAT_DIR}/lib && \ find ${TOMCAT_DIR}/webapps -type d -exec chmod 0750 {} \; && \ find ${TOMCAT_DIR}/webapps -type f -exec chmod 0640 {} \; && \ chmod -R g+rwx ${TOMCAT_DIR}/webapps && \ chmod 664 ${TOMCAT_DIR}/amps/*
+
+
+docker buildx build . --load --platform linux/arm64 -t alfresco-content-repository-community-arm64
+cd ../../..
+
+
+SearchServices
+############################
+#Search Services
+git clone git@github.com:Alfresco/SearchServices.git
+cd SearchServices/search-services
+# Edit pom.xml to change repository maven-restlet from http to https. 
+mvn clean install -DskipTests
+cd packaging/target/docker-resources
+
+##Edit Docker file
+
+#FROM alfresco/alfresco-base-java:11.0.13-centos-7@sha256:c1e399d1bbb5d08e0905f1a9ef915ee7c5ea0c0ede11cc9bd7ca98532a9b27fa
+FROM alfresco-base-java-arm64
+
+#Comment out the Yourkit entry - wouldn't download from laptop
+#RUN wget https://download.yourkit.com/yjp/2019.8/${JAVA_PROFILER}.zip -P /tmp/ && \
+#   unzip /tmp/${JAVA_PROFILER}.zip -d /usr/local && \
+#   rm /tmp/${JAVA_PROFILER}.zip && \
+#   cp /usr/local/YourKit-JavaProfiler*/license-redist.txt /licenses/3rd-party/YourKit-license-redist.txt
+# # YourKit Profiling Port
+# EXPOSE 10001
+
+docker buildx build . --load --platform linux/arm64 -t alfresco-search-services-arm64
+cd ../../../../..
+
+
+alfresco-content-app
+############################
+#Alfresco Content Application
+#-- Must install Node.js and Angular command line to build application 
+#Download and install Node.js from https://nodejs.org/en/download/current/
+# Then install ng: 
+sudo npm install @angular/cli
+
+#These flagged as missing on my first build attempt
+npm install minimatch
+npm install minimatch-browser
+
+git clone git@github.com:Alfresco/alfresco-content-app.git
+cd alfresco-content-app
+
+npm run prebuild
+
+npm run build
+# If it errors , run npm install and then rerun the npm run build
+
+#edit Dockerfile and set the project name like ARG PROJECT_NAME="content-ce"
+docker buildx build . --load --platform linux/arm64 -t alfresco-content-app-arm64
+cd ..
+
+
+acs-ingress (aka proxy)
+############################
+#acs ingress
+git clone git@github.com:Alfresco/acs-ingress.git
+cd acs-ingress
+docker buildx build . --load --platform linux/arm64 -t alfresco-acs-nginx-arm64
+cd ..
+
+alfresco-transform-core
+############################
+#transform core
+git clone git@github.com:Alfresco/alfresco-transform-core.git
+cd alfresco-transform-core
+git checkout 2.5.7
+##Edit pom.xml
+
+    <!-- Added repositories and pluginRepositories for arm build -->
+    <repositories>
+        <repository>
+        <id>alfresco-maven-public-content-groups</id>
+        <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>alfresco-maven-public-content-repos</id>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/public</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alfresco-maven-public-content-repos</id>
+            <url>https://artifacts.alfresco.com/nexus/content/repositories/public</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+#Edit at Dockerfile in the subdirectories (individual t-engines to use the new arm64 images in the FROM statements
+Galen.Preston@APL-pxwn26cx21 alfresco-transform-core % find . -name Dockerfile
+./alfresco-transform-libreoffice/alfresco-transform-libreoffice-boot/Dockerfile
+./alfresco-transform-imagemagick/alfresco-transform-imagemagick-boot/Dockerfile
+./alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile
+./alfresco-transform-tika/alfresco-transform-tika-boot/Dockerfile
+./alfresco-transform-pdf-renderer/alfresco-transform-pdf-renderer-boot/Dockerfile
+./alfresco-transform-misc/alfresco-transform-misc-boot/Dockerfile
+
+
+#The maven process with the local Profile will build docker images via the pom.xml in the t-engine boot project
+#Edit pom.xml in each of the t-engine boot directories and rename the image.id property 
+# remove the alfresco/ prefix and append -arm64
+
+Galen.Preston@APL-pxwn26cx21 alfresco-transform-core % find a* -name pom.xml | grep boot
+alfresco-transform-core-aio/alfresco-transform-core-aio-boot/pom.xml
+alfresco-transform-imagemagick/alfresco-transform-imagemagick-boot/pom.xml
+alfresco-transform-libreoffice/alfresco-transform-libreoffice-boot/pom.xml
+alfresco-transform-misc/alfresco-transform-misc-boot/pom.xml
+alfresco-transform-pdf-renderer/alfresco-transform-pdf-renderer-boot/pom.xml
+alfresco-transform-tika/alfresco-transform-tika-boot/pom.xml
+
+   <properties>
+        <image.name>alfresco/alfresco-imagemagick<-arm64/image.name>
+        <!-- <image.name>alfresco/alfresco-imagemagick</image.name> -->
+        <image.registry>quay.io</image.registry>
+        <env.project_artifactId>${project.artifactId}</env.project_artifactId>
+    </properties>
+
+#build it 
+mvn clean install -Plocal
+
+### -- Having issues building the imagemagick t-engine image. 
+### ---  Go into each directory (both the boot and non-boot)
+### ---  In the non-boot run mvn install. In the -boot folder run mvn install -Plocal
+
+# Community version only references the aio transform so you can build only those two.
+
+cd ..
+
+
+acs-deployment
+############################
+#acs-deployment 
+git clone git@github.com:Alfresco/acs-deployment.git
+cd acs-deployment/docker-compose
+#Edit the community-docker-compose.yml file
+#Change the image: values to the local arm64 images like below. Note - the postgres and activemq  have arm64 images on docker hub so no change needed.
+
+services:
+  alfresco:
+#    image: alfresco/alfresco-content-repository-community:7.3.0-M2
+    image: alfresco-content-repository-community-arm64
+
+# Put it all together.
+docker-compose -f community-docker-compose.yml up -d
+
+
