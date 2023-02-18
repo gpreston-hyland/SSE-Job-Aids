@@ -1,13 +1,13 @@
 # Alfresco SSE Job Aids
 
-1. Alfresco Content Package Files
-1. VS Code Setup for Remote ssh Hosts
+1. [Alfresco Content Package Files for Import and Export](https://github.com/gpreston-hyland/SSE-Job-Aids/tree/main/Alfresco%20Content%20Package%20(ACP))
+1. *TODO:* VS Code Setup for Remote ssh Hosts
 
     *Think ADP EC2 instances.*
 
-1. Tips for working with ADP containers and VS Code
-1. Using adp.py to create new EC2 instance
-1. Deploy ACS to Docker on Mac ARM64 processors
+1. *TODO:* Tips for working with ADP containers and VS Code
+1. *TODO:* Using adp.py to create new EC2 instance
+1. *TODO:* Deploy ACS to Docker on Mac ARM64 processors
 
 
 
