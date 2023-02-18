@@ -19,6 +19,94 @@ The functionality for creating ACP files is native to Alfresco Content Services.
 
     See the `actions` object's 'export' action.
 
-Each of these methods will create the ACP file at a specified location in the source ACS system.
+ Each of these methods will create the ACP file at a specified location in the source ACS system.
+
+
+>  
+> :warning: **Warning:** The Generated Smart Folders are **NOT** ACP friendly.  
+>
+> *Be careful to exclude the generated folders. The base folder, with the System or Custom Smart Folder aspect is fine. If you include the generated folders, the export process dutifully captures and includes them **and their 'content'** in the ACP file. When they are imported, they retain the smart folder icon, so they appear to be smart folders. However, they are actual folders and will contain any content the source showed via the smart folder query!*
+
+### Usage Information and Parameters
+| `name` | `type` | `mandatory` | `multiValued` |
+|--------|--------|:-----------:|:-------------:|
+|`package-name`|`d:text`|true|false|
+|`encoding`|`d:text`|true|false|
+|`store`|`d:text`|true|false|
+|`destination`|`d:noderef`|true|false|
+|`include-children`|`d:boolean`|false|false|
+|`include-self`|`d:boolean`|false|false|  
+
+<br/>
+   
+
+*Or, from the Core REST API using a HTTP GET on /action-definitions/export*
+```json
+{
+  "entry": {
+    "applicableTypes": [],
+    "parameterDefinitions": [
+      {
+        "name": "package-name",
+        "type": "d:text",
+        "multiValued": false,
+        "mandatory": true
+      },
+      {
+        "name": "encoding",
+        "type": "d:text",
+        "multiValued": false,
+        "mandatory": true
+      },
+      {
+        "name": "store",
+        "type": "d:text",
+        "multiValued": false,
+        "mandatory": true
+      },
+      {
+        "name": "destination",
+        "type": "d:noderef",
+        "multiValued": false,
+        "mandatory": true
+      },
+      {
+        "name": "include-children",
+        "type": "d:boolean",
+        "multiValued": false,
+        "mandatory": false
+      },
+      {
+        "name": "include-self",
+        "type": "d:boolean",
+        "multiValued": false,
+        "mandatory": false
+      }
+    ],
+    "name": "export",
+    "trackStatus": false,
+    "description": "Exports a Space and optionally its children to an Alfresco export package.",
+    "adhocPropertiesAllowed": false,
+    "id": "export",
+    "title": "Export Space"
+  }
+}
+```
+
+### Create via Share
+
+When using Share you must initiate the export (ACP file creation) on a folder node. Navigate to the folder's parent and either click the item detail field and from the item options select More... | Create ACP or from the Folder Details Screen.
+
+![Create ACP Action](images/CreateACPmenu.png) ![Create ACP Action](images/CreateACPmenu.png)
+
+
+
+
+
+### Create via REST API
+
+### Create via JavaScript API
+
+  
 
 ## Import Content from an ACP File
