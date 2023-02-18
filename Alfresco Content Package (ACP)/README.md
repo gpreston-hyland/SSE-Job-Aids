@@ -97,13 +97,43 @@ The functionality for creating ACP files is native to Alfresco Content Services.
 
 When using Share you must initiate the export (ACP file creation) on a folder node. Navigate to the folder's parent and either click the item detail field and from the item options select More... | Create ACP or from the Folder Details Screen.
 
-![Create ACP Action](images/CreateACPmenu.png) ![Create ACP Action](images/CreateACPmenu.png)
+<img src="assets/CreateACPmenu.png" width="20%"></img> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<img src="assets/CreateACPAction.png" width="35%"></img>
+
+Complete the form and click 'OK'
+
+<img src="assets/CreateACPForm.png" width="40%"></img>
+
+<br />
+
+> :bulb: **Tip:**   
+> To only export portions of a folder's contents, make a temporary folder and copy the desired contents to it. Then create the ACP file from the temp folder and likely *not* choosing the 'Include Self' option.
+
+
 
 
 
 
 
 ### Create via REST API
+
+See http://grpalf.webhop.me/api-explorer/#/actions/actionExec
+
+Invoke the endpoing http://grpalf.webhop.me/alfresco/api/-default-/public/alfresco/versions/1/action-executions with the 
+```json
+{
+  "actionDefinitionId": "export",
+  "targetId": "d:noderef",
+  "params": {
+    "package-name": "myExport.acp",
+    "encoding": "UTF-8",
+    "store": "workspace://SpacesStore",
+    "destination": "d:noderef",
+    "include-self": "true or false",
+    "include-children": "true or false"
+  }
+}
+```
 
 ### Create via JavaScript API
 
