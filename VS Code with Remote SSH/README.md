@@ -23,7 +23,7 @@ Click the green status bar item '><' in the lower left of the VSCode screen open
 
 ![Quick Action](assets/actionBar.png)
 
-Select your personal file under your login directory. On the Mac it will be in /Users/`<user-name>`/.ssh/config - also known as ~/.ssh/config.\*. The tilde (~) is \*nix shorthand for your home directory.
+Select your personal file under your login directory. On the Mac it will be in /Users/`<user-name>`/.ssh/config - also known as \~/.ssh/config.\*. The tilde (\~) is \*nix shorthand for your home directory.
 
 ![Select personal file](assets/openSSHcfg.png)
 
@@ -82,6 +82,10 @@ On the Mac, you can drag items from Finder (it should work from Window Explorer 
 The adp/data directory is available as /data from most, if not all, of the containers. You can use the import or exports folder under data to make files accessible between the host server and the container. 
 
 ![shared directories](assets/adp-data.png)
+
+and
+
+![shared from container](assets/adp-container-data.png)
 
 When using these directories to access files between host server and container, you may run into permission issues. The owner and group attributes of the files will differ based on where you are looking at them (host or container). Those permissions may not always be conducive to simple file clean up. Luckily, from the host EC2 server, the ec2-user has the ability to use the sudo command (allow to run the single command with elevated privileges).
 
