@@ -63,11 +63,32 @@ If you installed the Remote Explorer extension, you could also select the extens
 
 Once successfully configured, you start and run VS Code on your local workstation to edit files on the remote server as if they were local.
 
-*Before you ask, I haven't figured out how to use the VS Code environemtn to edit files inside the containers!*
-
 ### ADP Benefits
 
 If you open a terminal window in VS Code from the Terminal menu or by pressing Ctrl-`, you have a shell on the remote host, not your local machine. Here you can enter your normal ./adp.py commands as if you'd ssh'd to the server from your workstation.
+
+### Editing files ***INSIDE*** Containers!
+
+Adding the Microsoft Docker plugin to VS Code provides the ability to edit files inside the containers as long Docker is installed. Search the Extentions Marketplace for 'Docker'. It is also available at this
+[VS Marketplace Link.](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+
+![vscode docker](assets/Docker%20Extension.png)
+
+When the extension is enabled, you'll see the docker icon in the left action bar. Select it for access to container information and files.
+
+![docker action pane](assets/docker-pane.png)
+
+For running containers, you'll be able to drill down under the container to view / edit files *INSIDE* the container.
+
+Since ADP instances are build with Docker containers, enabling the Docker extension when connected to the remote system using the Remote - SSH extension <font color="red">**you can also view and edit files within the ADP containers!** </font>
+
+Connect to your remote ADP instance and open the ADP folder. If necessary start ADP. Open the Extensions pane and search for Docker. You'll then have an option to install it to the remote instance.
+
+![remote docker install](assets/Install%20remote%20docker.png)
+
+Once successful, you'll see the docker emblem. Click on it and you'll see running containers. Expand one and you'll see Files. Drilling down in Files, you are traversing the container's directory tree. The icon highlighted below on a file will open it in the VS Code editor. The other is for download to the local EC2 filesystem.
+
+![remote container edit](assets/Edit%20Container%20File.png)
 
 ### File Transfer Simplified
 
@@ -79,7 +100,7 @@ On the Mac, you can drag items from Finder (it should work from Window Explorer 
 
 *This isn't specific to the VS Code Remote SSH, but it's mighty useful since you now have a graphical IDE and an embedded terminal on the remote host.*
 
-The adp/data directory is available as /data from most, if not all, of the containers. You can use the import or exports folder under data to make files accessible between the host server and the container. 
+The adp/data directory is available as /data from most, if not all, of the containers. You can use the import or exports folder under data to make files accessible between the host server and the container.
 
 ![shared directories](assets/adp-data.png)
 
