@@ -5,7 +5,6 @@
 
     *Think ADP EC2 instances.*
 
-1. *TODO:* Tips for working with ADP containers and VS Code
 1. *TODO:* Using adp.py to create new EC2 instance
 1. *TODO:* Deploy ACS to Docker on Mac ARM64 processors
 
