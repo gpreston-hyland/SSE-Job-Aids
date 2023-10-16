@@ -1,0 +1,960 @@
+{
+	"info": {
+		"_postman_id": "96e00608-e5d5-4645-b5f2-fc6983743e47",
+		"name": "APA-INS-101",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22975331"
+	},
+	"item": [
+		{
+			"name": "Client Credentials Grant Type",
+			"item": [
+				{
+					"name": "Get keycloak token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var tokens=JSON.parse(responseBody);",
+									"pm.environment.set(\"sse-client-token\",tokens.access_token);",
+									"pm.environment.set(\"sse-id-token\", tokens.id_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{sse-client-id}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "client_secret",
+									"value": "{{sse-client-secret}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/auth/realms/alfresco/protocol/openid-connect/token",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"alfresco",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "assignee",
+									"value": "gpreston",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "ASSIGNED",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "assignee",
+									"value": "gpreston",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get Process Definitions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/process-definitions",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"process-definitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Process Definitions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/process-definitions",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"process-definitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Process Definitions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/process-definitions",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"process-definitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(form) Get Forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/form/v1/forms",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"form",
+								"v1",
+								"forms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(form) Get Form Definition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/form/v1/forms/form-08be427b-a88d-45ff-b20f-e020a029920e",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"form",
+								"v1",
+								"forms",
+								"form-08be427b-a88d-45ff-b20f-e020a029920e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(pref) Get Preferences",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/preference/v1/preferences",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"preference",
+								"v1",
+								"preferences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(audit) Get events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/audit/v1/events",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"audit",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/applications",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/applications",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{sse-client-secret}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{sse-client-id}}",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "ssecred",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{hostname}}/auth/realms/alfresco/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "client_credentials",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Password Grant Type",
+			"item": [
+				{
+					"name": "Get keycloak token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var tokens=JSON.parse(responseBody);",
+									"pm.environment.set(\"sse-pwd-token\",tokens.access_token);",
+									"pm.environment.set(\"sse-pwd-refresh-token\",tokens.refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "alfresco",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{sse-username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{sse-password}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/auth/realms/alfresco/protocol/openid-connect/token",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"alfresco",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Process Instances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/process-instances",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"process-instances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query/admin) Get Tasks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/admin/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"admin",
+								"v1",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ASSIGNED",
+									"disabled": true
+								},
+								{
+									"key": "assigned",
+									"value": "gpreston",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Tasks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ASSIGNED",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Tasks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/tasks",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(query) Get Task variables",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/query/v1/tasks/b3ce9c02-ff03-11ed-80de-caa583144ba4/variables",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"query",
+								"v1",
+								"tasks",
+								"b3ce9c02-ff03-11ed-80de-caa583144ba4",
+								"variables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(rb) Get Process Instance variables",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/rb/v1/process-instances/8df3723a-ff03-11ed-80de-caa583144ba4/variables",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"rb",
+								"v1",
+								"process-instances",
+								"8df3723a-ff03-11ed-80de-caa583144ba4",
+								"variables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(form) Get Forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/form/v1/forms",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"form",
+								"v1",
+								"forms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(form) Get Form Definition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/form/v1/forms/form-08be427b-a88d-45ff-b20f-e020a029920e",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"form",
+								"v1",
+								"forms",
+								"form-08be427b-a88d-45ff-b20f-e020a029920e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(audit) Get events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname-apa}}/{{process-name}}/audit/v1/events",
+							"host": [
+								"{{hostname-apa}}"
+							],
+							"path": [
+								"{{process-name}}",
+								"audit",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "password",
+						"value": "{{sse-password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{sse-username}}",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "sse-pwd-token",
+						"type": "string"
+					},
+					{
+						"key": "refreshRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "authRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "challengeAlgorithm",
+						"value": "S256",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "alfresco",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "client_authentication",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{hostname}}/auth/realms/alfresco/protocol/openid-connect/token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
