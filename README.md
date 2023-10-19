@@ -10,5 +10,3 @@
    * [APA Task Polling](https://github.com/gpreston-hyland/pollingDemo) Start a process and poll for it's completion before proceeding.
 
 1. *TODO:* Using adp.py to create new EC2 instance
-
-1. [ACS JavaScript samples](./JavaScriptSamples/)
