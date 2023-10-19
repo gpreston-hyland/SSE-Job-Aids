@@ -1,0 +1,2 @@
+#!/bin/bash
+nohup java -jar alfresco-elasticsearch-live-indexing-3.3.0-app.jar --spring.activemq.broker-url=nio://localhost:61616 --spring.elasticsearch.rest.uris=http://localhost:9200 --alfresco.sharedFileStore.baseUrl=http://localhost:8099/alfresco/api/-default-/private/sfs/versions/1/file/ --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config --elasticsearch.indexName=alfresco > live-index.log 2> live-index-error.log &
