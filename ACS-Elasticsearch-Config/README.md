@@ -32,6 +32,24 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
 1. Deploy the `model-ns-prefix-mapping-1.0.0.jar` extention to the ADP Content container like other ACS AMPs/JARs. Place it in `~/adp/data/services/content/custom`.
 
+1. Edit the alfresco-global.properties file and add the lines similar to the documentation for Elasticsearch at <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>, but note the `elasticsearch.host` change. **On the internal Docker container network in the ADP, the Elasticsearch container has a host name of `elasticsearch`.**
+
+    ***NOTE:*** You'll also need to comment out the existing `index.subsystem.name=solr6`.
+
+    ```properties
+    #index.subsystem.name=solr6
+    
+    # Set the Elasticsearch subsystem
+    index.subsystem.name=elasticsearch
+    # Elasticsearch index properties
+    elasticsearch.indexName=alfresco
+    elasticsearch.createIndexIfNotExists=true
+    # Elasticsearch server properties
+    elasticsearch.host=elasticsearch
+    elasticsearch.port=9200
+    elasticsearch.baseUrl=/
+    ```
+
 1. Restart the content container.
 
 ## Configure the ASE Connector
@@ -56,29 +74,13 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     --spring.activemq.broker-url=nio://localhost:61616
     ```
 
-1. Edit the alfresco-global.properties file and add the lines similar to the documentation for Elasticsearch at <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>, but note the `elasticsearch.host` change. **On the internal Docker container network in the ADP, the Elasticsearch container has a host name of `elasticsearch`.**
-
-    ***NOTE*** You'll also need to comment out the existing `index.subsystem.name=solr6`.
-
-    ```properties
-    # Set the Elasticsearch subsystem
-    index.subsystem.name=elasticsearch
-    # Elasticsearch index properties
-    elasticsearch.indexName=alfresco
-    elasticsearch.createIndexIfNotExists=true
-    # Elasticsearch server properties
-    elasticsearch.host=elasticsearch
-    elasticsearch.port=9200
-    elasticsearch.baseUrl=/
-    ```
-
 1. On the EC2 open the Repository Admin Web Console
 
     `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
 
 1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as shown (from <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>)
 
-    <img src="./alfresco-search-service-elastic.png" width="50%">
+    <img src="./alfresco-search-service-elastic.png" width="80%">
 
 1. Save the change
 
