@@ -32,7 +32,7 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
 1. Deploy the `model-ns-prefix-mapping-1.0.0.jar` extention to the ADP Content container like other ACS AMPs/JARs. Place it in `~/adp/data/services/content/custom`.
 
-1. Edit the alfresco-global.properties file and add the lines similar to the documentation for Elasticsearch at <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>, but note the `elasticsearch.host` change. **On the internal Docker container network in the ADP, the Elasticsearch container has a host name of `elasticsearch`.**
+1. Edit the alfresco-global.properties file and add the lines similar to the documentation for Elasticsearch at <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>, but note the `elasticsearch.host` change. **On the internal Docker container network in the ADP, the Elasticsearch container has a host name of `elasticsearch`.** Inside the content container, `localhost` would refer to the content container.
 
     ***NOTE:*** You'll also need to comment out the existing `index.subsystem.name=solr6`.
 
@@ -68,7 +68,7 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
     `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
 
-1. Open the Search Service screen and set it to Elasticsearch and change the hostname from `localhost` to `elasticsearch` as shown. The reason for the change has to do with the container environment. From the content conainer's point of view, Elasaticsearch is running in the elasticsearch container, whose internal docker network hostname is `elasticsearch`.
+1. Open the Search Service screen and set it to Elasticsearch and change the hostname from `localhost` to `elasticsearch`, if necessary. From the content conainer's point of view, Elasaticsearch is running in the elasticsearch container, whose internal docker network hostname is `elasticsearch`.
 
     <img src="./alfresco-search-service-elastic.png" width="80%">
 
