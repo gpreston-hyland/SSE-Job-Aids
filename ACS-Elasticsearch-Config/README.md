@@ -24,7 +24,7 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
 1. Upload the ASE jar files to the new directory.
 
-1. Download - [model-ns-prefix-mapping-1.0.0](https://github.com/AlfrescoLabs/model-ns-prefix-mapping/releases/download/1.0.0/model-ns-prefix-mapping-1.0.0.jar) and upload it to your EC2
+1. Download [model-ns-prefix-mapping-1.0.0](https://github.com/AlfrescoLabs/model-ns-prefix-mapping/releases/download/1.0.0/model-ns-prefix-mapping-1.0.0.jar) and upload it to your EC2
 
     or
 
@@ -38,14 +38,14 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
 1. Change directory into the `elastic-connector-331` location.
 
-1. Get the namespace (ns) prefix map. You need a valid username / password.
+1. Get the namespace (ns) prefix map. You need a valid username / password. This will create the file `reindex.prefixes-file.json` for use in the next step.
 
-    `curl -u <demo-username>:<demo-password> http://localhost:80/alfresco/s/model/ns-prefix-map > reindex.prefixes-file.json`
+    `curl -u `*`<acs-username>:<acs-password>`*` http://localhost:80/alfresco/s/model/ns-prefix-map > reindex.prefixes-file.json`
 
 1. In the elastic-connector-331 directory run the reindex.
 
     ```bash
-    java -jar alfresco-elasticsearch-reindexing-3.3.0-app.jar \
+    java -jar alfresco-elasticsearch-reindexing-3.3.1-app.jar \
     --alfresco.reindex.jobName=reindexByIds \
     --spring.elasticsearch.rest.uris=http://localhost:9200 \
     --spring.datasource.url=jdbc:postgresql://localhost:5432/alfresco \
@@ -56,7 +56,9 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     --spring.activemq.broker-url=nio://localhost:61616
     ```
 
-1. Edit the alfresco-global.properties file and add the lines from the documentation for elasticsearch at https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
+1. Edit the alfresco-global.properties file and add the lines similar to the documentation for Elasticsearch at <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>, but note the `elasticsearch.host` change. **On the internal Docker container network in the ADP, the Elasticsearch container has a host name of `elasticsearch`.**
+
+    ***NOTE*** You'll also need to comment out the existing `index.subsystem.name=solr6`.
 
     ```properties
     # Set the Elasticsearch subsystem
@@ -65,19 +67,18 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     elasticsearch.indexName=alfresco
     elasticsearch.createIndexIfNotExists=true
     # Elasticsearch server properties
-    elasticsearch.host=localhost
+    elasticsearch.host=elasticsearch
     elasticsearch.port=9200
     elasticsearch.baseUrl=/
     ```
 
-
-    ***NOTE*** you'll need to comment out the existing `index.subsystem.name=solr6`
-
 1. On the EC2 open the Repository Admin Web Console
 
-    `http://<ec2-hostname>/alfresco/s/enterprise/admin`
+    `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
 
-1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as show in https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
+1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as shown (from <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>)
+
+    <img src="./alfresco-search-service-elastic.png" width="50%">
 
 1. Save the change
 
@@ -89,7 +90,7 @@ and run it in the background as below to keep it running if the terminal session
 *That's all on one line below!*
 
 ```bash
-nohup java -jar alfresco-elasticsearch-live-indexing-3.3.0-app.jar --spring.activemq.broker-url=nio://localhost:61616 --spring.elasticsearch.rest.uris=http://localhost:9200 --alfresco.sharedFileStore.baseUrl=http://localhost:8099/alfresco/api/-default-/private/sfs/versions/1/file/ --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config --elasticsearch.indexName=alfresco > live-index.log 2> live-index-error.log &
+nohup java -jar alfresco-elasticsearch-live-indexing-3.3.1-app.jar --spring.activemq.broker-url=nio://localhost:61616 --spring.elasticsearch.rest.uris=http://localhost:9200 --alfresco.sharedFileStore.baseUrl=http://localhost:8099/alfresco/api/-default-/private/sfs/versions/1/file/ --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config --elasticsearch.indexName=alfresco > live-index.log 2> live-index-error.log &
 ```
 
 To make life easier, upload the [start-live-index.sh](./start-live-index.sh) script to your adp directory. Then from a command prompt run the command `chmod ug+x` to make it an executable. Then you just need to run the script to start live indexing.
