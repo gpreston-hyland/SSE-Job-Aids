@@ -50,15 +50,29 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     elasticsearch.baseUrl=/
     ```
 
-1. Restart the content container.
+1. Restart the ADP instance. It may be overkill, but this is a custom setup with regards to the ASE documentation.
+
+    `./adp.py stop; ./adp.py start`
 
 ## Configure the ASE Connector
 
-1. Change directory into the `elastic-connector-331` location.
+1. From a command line on the EC2 instance, change directory into the `elastic-connector-331` location.
+
+    `cd ~/adp/elastic-connector-331`
 
 1. Get the namespace (ns) prefix map. You need a valid username / password. This will create the file `reindex.prefixes-file.json` for use in the next step.
 
     `curl -u `*`<acs-username>:<acs-password>`*` http://localhost:80/alfresco/s/model/ns-prefix-map > reindex.prefixes-file.json`
+
+1. On the EC2 open the Repository Admin Web Console
+
+    `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
+
+1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as shown (from <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>)
+
+    <img src="./alfresco-search-service-elastic.png" width="80%">
+
+1. Save the change. You can also click the Test connection button after refreshing the browser.
 
 1. In the elastic-connector-331 directory run the reindex.
 
@@ -73,16 +87,6 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config \
     --spring.activemq.broker-url=nio://localhost:61616
     ```
-
-1. On the EC2 open the Repository Admin Web Console
-
-    `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
-
-1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as shown (from <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>)
-
-    <img src="./alfresco-search-service-elastic.png" width="80%">
-
-1. Save the change
 
 ## Start Live Indexing
 
@@ -99,9 +103,30 @@ To make life easier, upload the [start-live-index.sh](./start-live-index.sh) scr
 
 `./start-live-index.sh`
 
+The process will log errors to `live-index-error.log` and regular output to `live-index.log`.
+
 
 To see it running (or to get the PID to kill it for restart):
 
-`ps -ef |grep ec2-user|grep live-indexing`
+`ps -ef |grep ec2-user|grep live-indexinging`
 
+*The first number in the java command is the PID. In the sample below, **48770**.* 
 
+```bash
+ec2-user   48770   11860 15 20:53 pts/0    00:00:17 java -jar alfresco-elasticsearch-live-indexing-3.3.1-app.jar --spring.activemq.broker-url=nio://localhost:61616 --spring.elasticsearch.rest.uris=http://localhost:9200 --alfresco.sharedFileStore.baseUrl=http://localhost:8099/alfresco/api/-default-/private/sfs/versions/1/file/ --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config --elasticsearch.indexName=alfresco
+ec2-user   49592   11860  0 20:55 pts/0    00:00:00 grep --color=auto live-index
+```
+
+Then to stop the live indexing process,
+
+`kill -9 48770`
+
+### Troubleshooting
+
+* During testing and getting the sequence of steps right, sometimes the content container would fail to finish starting. For whatever reason, I could repair the problem by deleting the content container, **but not its data volume(s).**
+
+    `./adp.py stop`
+
+    `./adp.py destroy content`
+
+    `./adp.py start`
