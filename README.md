@@ -11,4 +11,4 @@
 
 1. [Setup ACS 7.4+ to use Elastic & Connector Configuration](./ACS-Elasticsearch-Config/)
 
-1. *TODO:* Using adp.py to create new EC2 instance
+1. [Using adp.py to create new EC2 instance](./ADP-EC2-Command-Line-Create/)
