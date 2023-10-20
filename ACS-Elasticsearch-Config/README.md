@@ -68,7 +68,7 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
     `http://`*`<ec2-hostname>`*`/alfresco/s/enterprise/admin`
 
-1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as shown (from <https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository>)
+1. Open the Search Service screen and set it to Elasticsearch and change the hostname from `localhost` to `elasticsearch` as shown. The reason for the change has to do with the container environment. From the content conainer's point of view, Elasaticsearch is running in the elasticsearch container, whose internal docker network hostname is `elasticsearch`.
 
     <img src="./alfresco-search-service-elastic.png" width="80%">
 
@@ -88,6 +88,8 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     --spring.activemq.broker-url=nio://localhost:61616
     ```
 
+    *In this case, the `localhost:9200` is valid (see the hostname comment above for the Search Service configuration) since the command is running at the docker host system (EC2) level where Elasticsearch's container is accessible on the localhost, port 9200.*
+
 ## Start Live Indexing
 
 To start the live-indexing program, in an EC2 terminal window, change directory to  `elastic-connector-331`
@@ -104,7 +106,6 @@ To make life easier, upload the [start-live-index.sh](./start-live-index.sh) scr
 `./start-live-index.sh`
 
 The process will log errors to `live-index-error.log` and regular output to `live-index.log`.
-
 
 To see it running (or to get the PID to kill it for restart):
 
