@@ -36,27 +36,50 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
 
 ## Configure the ASE Connector
 
+1. Change directory into the `elastic-connector-331` location.
 
-6. Change directory into the elastic-connector-330 location
-7. Get the ns prefix map with
-curl -u demo:demo http://localhost:80/alfresco/s/model/ns-prefix-map > reindex.prefixes-file.json
-8. In the elastic-connector-330 directory run
-java -jar alfresco-elasticsearch-reindexing-3.3.0-app.jar \
---alfresco.reindex.jobName=reindexByIds \
---spring.elasticsearch.rest.uris=http://localhost:9200 \
---spring.datasource.url=jdbc:postgresql://localhost:5432/alfresco \
---spring.datasource.username=alfresco \
---spring.datasource.password=alfresco \
---alfresco.reindex.prefixes-file=file:reindex.prefixes-file.json \
---alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config \
---spring.activemq.broker-url=nio://localhost:61616
-9. Edit the alfresco-global.properties file and add the lines from the documentation for elasticsearch
-https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
-***NOTE*** you'll need to comment out the existing index.subsystem.name=solr6
-10. On the EC2 open the Repository Admin Web Console
-http://<ec2-hostname>/alfresco/s/enterprise/admin
-11. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as show in https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
-12. Save the change
+1. Get the namespace (ns) prefix map. You need a valid username / password.
+
+    `curl -u <demo-username>:<demo-password> http://localhost:80/alfresco/s/model/ns-prefix-map > reindex.prefixes-file.json`
+
+1. In the elastic-connector-331 directory run the reindex.
+
+    ```bash
+    java -jar alfresco-elasticsearch-reindexing-3.3.0-app.jar \
+    --alfresco.reindex.jobName=reindexByIds \
+    --spring.elasticsearch.rest.uris=http://localhost:9200 \
+    --spring.datasource.url=jdbc:postgresql://localhost:5432/alfresco \
+    --spring.datasource.username=alfresco \
+    --spring.datasource.password=alfresco \
+    --alfresco.reindex.prefixes-file=file:reindex.prefixes-file.json \
+    --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config \
+    --spring.activemq.broker-url=nio://localhost:61616
+    ```
+
+1. Edit the alfresco-global.properties file and add the lines from the documentation for elasticsearch at https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
+
+    ```properties
+    # Set the Elasticsearch subsystem
+    index.subsystem.name=elasticsearch
+    # Elasticsearch index properties
+    elasticsearch.indexName=alfresco
+    elasticsearch.createIndexIfNotExists=true
+    # Elasticsearch server properties
+    elasticsearch.host=localhost
+    elasticsearch.port=9200
+    elasticsearch.baseUrl=/
+    ```
+
+
+    ***NOTE*** you'll need to comment out the existing `index.subsystem.name=solr6`
+
+1. On the EC2 open the Repository Admin Web Console
+
+    `http://<ec2-hostname>/alfresco/s/enterprise/admin`
+
+1. Open the Search Service screen and set it to Elasticsearch and change the hostname from localhost to elasticsearch as show in https://docs.alfresco.com/search-enterprise/latest/install/#configure-subsystem-in-repository
+
+1. Save the change
 
 ## Start Live Indexing
 
@@ -65,7 +88,7 @@ and run it in the background as below to keep it running if the terminal session
 
 *That's all on one line below!*
 
-```shell
+```bash
 nohup java -jar alfresco-elasticsearch-live-indexing-3.3.0-app.jar --spring.activemq.broker-url=nio://localhost:61616 --spring.elasticsearch.rest.uris=http://localhost:9200 --alfresco.sharedFileStore.baseUrl=http://localhost:8099/alfresco/api/-default-/private/sfs/versions/1/file/ --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config --elasticsearch.indexName=alfresco > live-index.log 2> live-index-error.log &
 ```
 
