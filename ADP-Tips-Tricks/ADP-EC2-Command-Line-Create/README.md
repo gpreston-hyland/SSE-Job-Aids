@@ -4,25 +4,7 @@ The following outlines creating an AWS EC2 from the Alfresco Demo Platform (ADP)
 
 ## Prereq's
 
-These are similar to what's outlined in the ADP documentation, skipping the Docker Desktop install.
-
-1. Install Python 3 - <https://www.python.org/downloads/>
-
-1. Install required packages by running:
-
-    `pip3 install boto3 requests pyyaml httpx`
-
-1. Verify the AWS CLI version is >= 2.0
-
-    `aws --version`
-
-    If not, refer to the [AWS CLI user guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
-
-1. From a command prompt on the Macbook, configure the AWS SSO. Refer to the internal confluence page on ADP's OKTA replacement for complete directions.
-
-    `aws configure sso`
-
-1. You will need the full directory path to the SSL key (.pem) to use for access to the remote EC2, once built.
+Make sure you've installed and configured all the necessary prerequisites from [ADP-Prereqs](../ADP-Prereqs/).
 
 ## Build the EC2
 
@@ -34,12 +16,16 @@ These are similar to what's outlined in the ADP documentation, skipping the Dock
 
     `aws sso login --profile adp`
 
+    > [!NOTE] If you set the AWS_DEFAULT_PROFILE environment variable simply,  
+    > `aws sso login`
+
 1. Use the `adp.py` script and follow the prompts. The script will create the required EC2 tags for you!
 
     `./adp.py aws ec2 create`
 
     * Select the AWS region.
-    * Enter the instance name.
+    * Enter the instance name.  
+    > [!NOTE] ***This name is cleansed (remove punctuation and white space) to set a tag on the image (dnsName).*** You may then use *\<dnsname\>.alfdemo.com* rather than the EC2 name derived from the public IP address.
     * Enter the purpose.
     * Provide the path and name for your SSL pem key.
     * Enter the owner, customer, POC flag, and target end date.
@@ -62,7 +48,9 @@ These are similar to what's outlined in the ADP documentation, skipping the Dock
 
 1. Using the same pem key, you can now connect to the instance.
 
-    `ssh -i <my.key.pem> ec2-user@ec2-<ip-address>.compute-1.amazonaws.com`
+    `ssh -i <my.key.pem> ec2-user@ec2-<ip-address>.compute-1.amazonaws.com`  
+    or  
+    `ssh -i <my.key.pem> ec2-user@<dnsname>.alfdemo.com`
 
 ## After install
 

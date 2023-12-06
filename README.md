@@ -7,8 +7,15 @@
 1. [Alfresco Process Automation with Postman](https://github.com/gpreston-hyland/SSE-Job-Aids/tree/main/APA%20Postman)
 
 1. Alfresco Development Framework (ADF)
+
    * [APA Task Polling](https://github.com/gpreston-hyland/pollingDemo) Start a process and poll for it's completion before proceeding.
 
 1. [Setup ACS 7.4+ to use Elastic & Connector Configuration](./ACS-Elasticsearch-Config/)
 
-1. [Using adp.py to create new EC2 instance](./ADP-EC2-Command-Line-Create/)
+1. ADP Tips and Tricks
+
+   * [Install and Configure Prereqs](./ADP-Tips-Tricks/ADP-Prereqs/)
+
+   * [Using adp.py to create new EC2 instance](./ADP-Tips-Tricks/ADP-EC2-Command-Line-Create/)
+
+   * [Starting and Stopping Remote EC2](./ADP-Tips-Tricks/Start-Stop-Remote-EC2/)

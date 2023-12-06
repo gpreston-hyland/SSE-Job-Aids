@@ -1,0 +1,9 @@
+11/08/2023 5:32:53 PM Exception in thread "elasticsearch-initializer" org.alfresco.repo.lock.LockAcquisitionException: 10080092 Failed to release lock '{http://www.alfresco.org/model/system/1.0}elasticsearchconfiguration' using token '75a61638-713b-4d22-8eaf-7eae9c7c2dd2'.  The lock has expired and been taken by another process.
+11/08/2023 5:32:53 PM 	at org.alfresco.repo.domain.locks.AbstractLockDAOImpl.updateLocks(AbstractLockDAOImpl.java:244)
+11/08/2023 5:32:53 PM 	at org.alfresco.repo.domain.locks.AbstractLockDAOImpl.releaseLock(AbstractLockDAOImpl.java:182)
+11/08/2023 5:32:53 PM	at org.alfresco.repo.lock.JobLockServiceImpl$3.execute(JobLockServiceImpl.java:459)
+11/08/2023 5:32:53 PM	at org.alfresco.repo.lock.JobLockServiceImpl$3.execute(JobLockServiceImpl.java:1)
+11/08/2023 5:32:53 PM 	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:452)
+11/08/2023 5:32:53 PM 	at org.alfresco.repo.lock.JobLockServiceImpl.releaseLock(JobLockServiceImpl.java:462)
+11/08/2023 5:32:53 PM 	at org.alfresco.repo.search.impl.elasticsearch.contentmodelsync.ElasticsearchInitialiser.initWithLock(ElasticsearchInitialiser.java:151)
+11/08/2023 5:32:53 PM 	at java.base/java.lang.Thread.run(Thread.java:829)
