@@ -26,7 +26,8 @@ Make sure you've installed and configured all the necessary prerequisites from [
 
     * Select the AWS region.
     * Enter the instance name.  
-    > [!NOTE] ***This name is cleansed (remove punctuation and white space) to set a tag on the image (dnsName).*** You may then use *\<dnsname\>.alfdemo.com* rather than the EC2 name derived from the public IP address.
+    > [!NOTE]
+    > ***This name is cleansed (remove punctuation and white space) to set a tag on the image (dnsName).*** You may then use *\<dnsname\>.alfdemo.com* rather than the EC2 name derived from the public IP address.
     * Enter the purpose.
     * Provide the path and name for your SSL pem key.
     * Enter the owner, customer, POC flag, and target end date.

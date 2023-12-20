@@ -1,12 +1,14 @@
 # AFS Server Setup / Config with ADP
 
-The following sections detail information to 
+The following sections detail information to:
 
 1. Deploy an Alfresco Federation Services (AFS) Server on a standalone instance with the ***ADP 7.4.1 distribution.***
 
 1. Configure Transparent Content Services (TCS) on an Alfresco Content Services (ACS) ADP instance.
 
 1. Configure a SharePoint to Alfresco Manage-in-Place (MIP) federation job.
+
+*The ADP 7.4.1 doesn't contain the most current AFS Server software (3.1 which is Objective 3sixty 4.1.5). See [AFS 3.1 Container Build](https://github.com/gpreston-hyland/AFS3.1-Container-Build) (Private) for the details.*
 
 ## Deploy AFS Server
 
