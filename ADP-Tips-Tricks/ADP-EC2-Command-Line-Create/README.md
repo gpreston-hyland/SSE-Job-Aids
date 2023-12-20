@@ -16,7 +16,8 @@ Make sure you've installed and configured all the necessary prerequisites from [
 
     `aws sso login --profile adp`
 
-    > [!NOTE] If you set the AWS_DEFAULT_PROFILE environment variable simply,  
+    > [!NOTE]
+    > If you set the AWS_DEFAULT_PROFILE environment variable simply,  
     > `aws sso login`
 
 1. Use the `adp.py` script and follow the prompts. The script will create the required EC2 tags for you!
