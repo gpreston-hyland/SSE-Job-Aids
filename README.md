@@ -19,3 +19,7 @@
    * [Using adp.py to create new EC2 instance](./ADP-Tips-Tricks/ADP-EC2-Command-Line-Create/)
 
    * [Starting and Stopping Remote EC2](./ADP-Tips-Tricks/Start-Stop-Remote-EC2/)
+
+1. Links to external projects
+
+   * [Alfresco script root object](https://github.com/aborroy/alfresco-script-root-object) - Angel Borroy
