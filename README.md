@@ -20,6 +20,8 @@
 
    * [Starting and Stopping Remote EC2](./ADP-Tips-Tricks/Start-Stop-Remote-EC2/)
 
+1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
+
 1. Links to external projects
 
    * [Alfresco script root object](https://github.com/aborroy/alfresco-script-root-object) - Angel Borroy
