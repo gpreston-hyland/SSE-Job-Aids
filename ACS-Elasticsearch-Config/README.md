@@ -2,7 +2,7 @@
 
 This guide is a condensed version of the official Alfresco documentation to [Install using JAR files](https://docs.alfresco.com/search-enterprise/latest/install/#install-using-jar-files) geared to the Alfresco Demo Platform running on an AWS EC2. The information here was used to install and configure Alfreseco Content Services (ACS) 7.4.0 distributed in the ADP version 7.4.1 with the Alfresco Search Enterprise (ASE) 3.3.1.
 
-Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported *(contrary to the documentation site's Supported Platforms).*
+According to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported *(contrary to the documentation site's Supported Platforms).*
 
 *Note: These instructions will run the connector as a standalone application on the EC2, **not** in a container supported by the `adp.py` script! In other words, proceed at your own risk and make a backup image of your system, **just in case**.*
 
@@ -82,7 +82,7 @@ Accoding to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported 
     --spring.elasticsearch.rest.uris=http://localhost:9200 \
     --spring.datasource.url=jdbc:postgresql://localhost:5432/alfresco \
     --spring.datasource.username=alfresco \
-    --spring.datasource.password=alfresco \
+    --spring.datasource.password=************ \
     --alfresco.reindex.prefixes-file=file:reindex.prefixes-file.json \
     --alfresco.acceptedContentMediaTypesCache.baseurl=http://localhost:8090/transform/config \
     --spring.activemq.broker-url=nio://localhost:61616
