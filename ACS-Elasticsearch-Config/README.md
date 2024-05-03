@@ -14,9 +14,11 @@ According to the release notes for ASE 3.3.x, ACS 7.4.0 is the minimum supported
 
 1. Log into your EC2. You can `ssh` or connect via VS Code if you've set it up. Refer to [VS Code with Remote SSH](../VS%20Code%20with%20Remote%20SSH/) for more information.
 
-1. Install java on your EC2. From a command line,
+1. Install java on your EC2. From a command line. *Substitute `java-17` for newer ADP versions.*
 
-    `sudo yum install java-11-amazon-corretto.x86_64`
+    ```sh
+    sudo yum install java-11-amazon-corretto.x86_64
+    ```
 
 1. Create a directory for the ASE jar files.
 

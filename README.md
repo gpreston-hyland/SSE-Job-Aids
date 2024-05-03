@@ -13,15 +13,12 @@
 1. [Setup ACS 7.4+ to use Elastic & Connector Configuration](./ACS-Elasticsearch-Config/)
 
 1. ADP Tips and Tricks
-
    * [Install and Configure Prereqs](./ADP-Tips-Tricks/ADP-Prereqs/)
-
    * [Using adp.py to create new EC2 instance](./ADP-Tips-Tricks/ADP-EC2-Command-Line-Create/)
-
    * [Starting and Stopping Remote EC2](./ADP-Tips-Tricks/Start-Stop-Remote-EC2/)
-
+   * [Fix ADW Search Results in ADP 23.2.1](./ADP-Tips-Tricks/ADP%2023.2.1%20and%20ADW%204.4.1/)
+   * [APS Config for ADW](./ADP-Tips-Tricks/APS%20Configuration%20for%20ADW/)
 1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
 
 1. Links to external projects
-
    * [Alfresco script root object](https://github.com/aborroy/alfresco-script-root-object) - Angel Borroy

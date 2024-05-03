@@ -8,7 +8,7 @@ To use the workbench, you will need java installed and available on your path.
 
 Unzip [Apache Workbench](./assets/chemistry-opencmis-workbench-1.1.0-full.zip) on your workstation. See [Apache's Site](https://chemistry.apache.org/java/download.html) for other downloads and documentation.
 
-Open a command propt or terminal window as appropirate and change directory to the unzipped location. Run the appropriate `workbench.*` version for your OS.
+Open a command prompt or terminal window as appropriate and change directory to the unzipped location. Run the appropriate `workbench.*` version for your OS.
 
 * `./workbench.sh` for Mac / WSL / Linux
 * `.\workbench.bat` for the Windows folks.
