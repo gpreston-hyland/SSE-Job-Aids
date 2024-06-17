@@ -43,7 +43,7 @@ Make sure you've installed and configured all the necessary prerequisites from [
         "username": "Your Name",
         "se_name": "Your Name",
         "ec2_public_dns": "ec2-<ip-address>.compute-1.amazonaws.com",
-        "instance_id": "<your instance id>",
+        "instance_id": "<your.instance.id>",
         "pem_key": "<your.key.pem>"
     
     ```
@@ -53,6 +53,8 @@ Make sure you've installed and configured all the necessary prerequisites from [
     `ssh -i <my.key.pem> ec2-user@ec2-<ip-address>.compute-1.amazonaws.com`  
     or  
     `ssh -i <my.key.pem> ec2-user@<dnsname>.alfdemo.com`
+    or, with EC2 Instance Connection Endpoints (EICE) in place  
+    `ssh -i <my.key.pem> ec2-user@<your.instance.id> -o ProxyCommand='aws ec2-instance-connect open-tunnel --instance-id <your.instance.id> --region us-east-1 --profile adp'`
 
 ## After install
 

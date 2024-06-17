@@ -2,7 +2,7 @@
 
 *This document derived from [https://medium.com/@christyjacob4/using-vscode-remotely-on-an-ec2-instance-7822c4032cff](https://medium.com/@christyjacob4/using-vscode-remotely-on-an-ec2-instance-7822c4032cff).*
 
-Microsoft has several VS Code extensions to facillitate access to remote machines running an ssh server. These extensions allow using the *local* VS Code application to view and edit files on the *remote* machine. On the initial connection, VS Code installs the files it needs on the remote machine.
+Microsoft has several VS Code extensions to facilitate access to remote machines running an ssh server. These extensions allow using the *local* VS Code application to view and edit files on the *remote* machine. On the initial connection, VS Code installs the files it needs on the remote machine.
 
 ## Setup
 
@@ -10,12 +10,15 @@ At a minimum, install the [Remote - SSH](https://marketplace.visualstudio.com/it
 
 ![remote SSH](assets/remoteSSHext.png)
 
-There are two additional I find helpful, also from Microsoft. 
+There are two additional I find helpful, also from Microsoft.
 
 - Remote - SSH: Editing Configuration Files provide syntax highlighting when editing the SSH Configuration files.
 - Remote Explorer adds another app to the VS Code side bar with all the configured remote hosts listed for easy selection.
 
 ![Other extensions](assets/addlSSHext.png)
+
+> [!NOTE]
+> If you are going to be connecting via an AWS EC2 Instance Connection Endpoint (EICE) you also need to install the aws cli software. See the [ADP Prereqs](../ADP-Tips-Tricks/ADP-Prereqs/) page for detailed instructions.
 
 ## Configure A Remote Host
 
@@ -29,12 +32,25 @@ Select your personal file under your login directory. On the Mac it will be in /
 
 Give the 'Host' portion an alias that you'll see when connecting from VS Code or from a command prompt. *Remember the VS Code extension is sitting on top of the standard OpenSSH application and configuration.*
 
-Each
-Host stanza looks like:
+> [!IMPORTANT]
+> The format of the Host stanza depends on if this is a straight ssh connection or if you are using AWS EC2 Instance Connect Endpoints (EICE). Select from the two options below.
 
-![ssh host stanza](assets/sshConfigExample.png)
+### I'm Not Using EC2 Instance Connect Endpoints (EICE)
 
- Once complete, save the file. 
+Each Host stanza looks like:
+
+```shell
+Host <alias>
+    Hostname <my.EC2.public.dns>
+    IdentityFile ~/<path>/<my.pem.key.filename>
+    User ec2-user
+```
+
+ Once complete, save the file.
+
+For example,
+
+<img alt="ssh host stanza" src="./assets/sshConfigExample.png" width="40%" />
 
 Since this is built on the standard ssh package, having the above stanza in the config file means from a command line,
 
@@ -43,6 +59,35 @@ Since this is built on the standard ssh package, having the above stanza in the 
 is functionally equivalent to
 
 `ssh -i ~/aws-key/test-key.pem ec2-user@ec2-1-2-3-4.us-west-2.compute.amazonaws.com`
+
+### I Am Using EC2 Instance Connect Endpoints (EICE)
+
+> [!IMPORTANT]
+> Before you can use the EICE to connect, you need to add the `ADP Default SG` security group to your EC2 instances in the AWS console.
+
+Each Host stanza looks like:
+
+```shell
+Host <alias>
+    Hostname <aws.instance.id>
+    IdentityFile ~/<path>/<my.pem.key.filename>
+    User ec2-user
+    ProxyCommand aws ec2-instance-connect open-tunnel --instance-id %h --region <my.aws.region> --profile <my.aws.sso.profile>
+```
+
+ Once complete, save the file.
+
+For example,
+
+<img alt="ssh host stanza" src="./assets/sshEICEConfigExample.png" width="40%" />
+
+Since this is built on the standard ssh package, having the above stanza in the config file means from a command line,
+
+`ssh aws-adp`
+
+is functionally equivalent to
+
+`ssh -i ~/aws-key/test-key.pem ec2-user@i-0123456789abcedf -o ProxyCommand='aws ec2-instance-connect open-tunnel --instance-id i-0123456789abcedf --region us-east-1 --profile adp'`
 
 ## Connect to a Remote Host
 

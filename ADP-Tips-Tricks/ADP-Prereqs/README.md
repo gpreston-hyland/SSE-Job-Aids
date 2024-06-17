@@ -8,7 +8,7 @@ These are similar to what's outlined in the ADP documentation, skipping the Dock
 
     `pip3 install boto3 requests pyyaml httpx`
 
-1. Verify the AWS CLI version is >= 2.0
+1. Verify the AWS CLI version is >= 2.12.0
 
     `aws --version`
 
@@ -18,7 +18,7 @@ These are similar to what's outlined in the ADP documentation, skipping the Dock
 
     `aws configure sso`
 
-    > [!TIP]   
+    > [!TIP]
     > If you have already configured SSO on a machine, you may copy the file `~/.aws/config` to the corresponding location on the new machine and set the permissions with `chmod 600 ~/.aws/config`.
 
 1. If you are only using a single AWS SSO profile (most SSE's are), you may set an environment variable with the profile name to avoid typing `--profile <name>` on every `aws` commandline. Add the following to your default shell configuration file. On Mac's it could be `~/.zshrc` or `~/.bashrc`. On the EC2's it will be `~/.bashrc`.
