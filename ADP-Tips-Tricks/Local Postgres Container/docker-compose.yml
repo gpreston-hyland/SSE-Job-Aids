@@ -1,4 +1,4 @@
-version: '2'
+# version: '2'
 
 services:
   mypgdb:
@@ -10,6 +10,9 @@ services:
       - APP_DB_PASS=finra
       - APP_DB_NAME=finra
     volumes:
-      - ./mydbdata:/var/lib/postgresql/data
+      - mypgdata:/var/lib/postgresql/data
     ports:
       - 9432:5432
+
+volumes:
+  mypgdata:
