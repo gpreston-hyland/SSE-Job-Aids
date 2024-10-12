@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  mypgdb:
+    image: adp/mypgdb:1.0
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Alfresco01
+      - APP_DB_USER=finra
+      - APP_DB_PASS=finra
+      - APP_DB_NAME=finra
+    volumes:
+      - ./mydbdata:/var/lib/postgresql/data
+    ports:
+      - 9432:5432
