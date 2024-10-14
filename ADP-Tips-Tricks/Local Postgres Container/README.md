@@ -2,8 +2,7 @@
 
 This project came out of collaborating with [@Zach Tomechko](https://github.com/ztomechko)
 to provide a local [PostgreSQL](https://www.postgresql.org/) database for use with jobs
-in [Alfresco Federation Services (AFS)](https://docs.alfresco.com/federation-services/
-latest/). The local database is used to track documents being migrated to Alfresco from
+in [Alfresco Federation Services (AFS)](https://docs.alfresco.com/federation-services/latest/). The local database is used to track documents being migrated to Alfresco from
 Amazon S3. External services will add content to an S3 bucket and place an entry in this
 database. One of the fields in the database is a processed flag. The AFS job regularly
 scans the database for non-processed records to migrate.
