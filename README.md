@@ -21,7 +21,9 @@
    * [Remove a Custom Extension JAR or AMP from ADP](./ADP-Tips-Tricks/Undeploy%20Custom%20Extension/)
    * [Remove AEV from your ADP](./ADP-Tips-Tricks/Remove%20AEV%20from%20ADP/)
 1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
-1. [Configure Keycloak for Mobile Workspace](./ADP-Tips-Tricks/Configure%20Keycloak%20for%20Mobile%20Workspace/)
+1. Keycloak - (soon to be) Formerly known as Alfresco Identity Services
+   * [Configure Keycloak for Mobile Workspace](./Keycloak/Configure%20Keycloak%20for%20Mobile%20Workspace/)
+   * [Customize the Login Theme](./Keycloak/Custom%20Theme/)
 
 1. Links to external projects
    * [Alfresco script root object](https://github.com/aborroy/alfresco-script-root-object) - Angel Borroy
