@@ -1,4 +1,4 @@
-# Create Local Postgres Utility Container for ADP
+# Create Local Postgres Utility Container for AFS in ADP
 
 This project came out of collaborating with [@Zach Tomechko](https://github.com/ztomechko)
 to provide a local [PostgreSQL](https://www.postgresql.org/) database for use with jobs
@@ -15,7 +15,7 @@ The steps in this document are designed to work with the Alfresco Demo Platform 
 
 ## Prep work
 
-1. To use the local postgress from AFS via its JDBC Connector, you need to download the PostgreSQL JDBC driver from [https://jdbc.postgresql.org/download/](https://jdbc.postgresql.org/download/).
+1. To use the local postgres from AFS via its JDBC Connector, you need to download the PostgreSQL JDBC driver from [https://jdbc.postgresql.org/download/](https://jdbc.postgresql.org/download/).
 1. Upload the jar file to your EC2 instance and then log open a terminal window to the directory containing the jdbc jar file.
 1. Run the following to place the jar file into the AFS container. This assumes the container is named `adp_afs_1`.
 
@@ -74,7 +74,7 @@ To allow the use of standard `./adp.py` commands and to make it part of the ADP 
         image: postgres:17.0
         environment:
             - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=Alfresco01
+            - POSTGRES_PASSWORD=myPostgresPW
             - APP_DB_NAME=mydb
             - APP_DB_USER=app_mydb
             - APP_DB_PASS=app_mydb_pw
@@ -94,7 +94,7 @@ To allow the use of standard `./adp.py` commands and to make it part of the ADP 
 
     - The database files will be in a named docker volume in the `data/mypgdb-data` subdirectory.
 
-        The location is important. If you make changes to the `01-initdb.sh` startup script and there is data already in that directory, postgress **will not** execute the script. You will need to delete all the data in the `mypgdb-data` directory first. The files and directories in there won't be owned by the `ec2-user` since they are created by docker when the volume is created. You'll need to use `sudo` ***so be careful!***
+        The location is important. If you make changes to the `01-initdb.sh` startup script and there is data already in that directory, postgres ***will not*** execute the script. You will need to delete all the data in the `mypgdb-data` directory first. The files and directories in there won't be owned by the `ec2-user` since they are created by docker when the volume is created. You'll need to use `sudo` ***so be careful!***
 
         `sudo rm -rf data/mypgdb-data/*`
 
@@ -135,3 +135,8 @@ To allow the use of standard `./adp.py` commands and to make it part of the ADP 
 1. Click Test Connection.  If this is the first postgres connection you've set up, you'll need DBeaver to pull the JDBC drivers for you.
 
 1. Click Finish.
+
+## References
+
+- PostgreSQL - [https://www.postgresql.org/](https://www.postgresql.org/)
+- DBeaver Community [https://dbeaver.io/](https://dbeaver.io/)

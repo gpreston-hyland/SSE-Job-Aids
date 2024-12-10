@@ -1,0 +1,26 @@
+# version: '2'
+
+services:
+  mypgdb:
+    image: postgres:17.0
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Alfresco01
+      - APP_DB_NAME=mydb
+      - APP_DB_USER=app_mydb
+      - APP_DB_PASS=app_mydb_pw
+    volumes:
+      - ./data/mypgdb-data/:/var/lib/postgresql/data
+      - ./01-initdb.sh:/docker-entrypoint-initdb.d/01-initdb.sh
+    ports:
+      - 9432:5432
+
+  postgrest:
+    image: postgrest/postgrest
+    ports:
+      - 9433:3000
+    environment:
+      - PGRST_DB_URI=postgres://app_mydb:app_mydb_pw@mypgdb:5432/mydb
+      - PGRST_DB_ANON_ROLE=app_mydb
+    depends_on:
+      - mypgdb

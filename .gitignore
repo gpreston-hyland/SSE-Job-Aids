@@ -3,3 +3,4 @@
 .SSE*
 **/data/mypgdb-data/
 .vscode/settings.json
+**/mydb/

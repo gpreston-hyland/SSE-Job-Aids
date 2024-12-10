@@ -20,7 +20,8 @@
    * [APS Config for ADW](./ADP-Tips-Tricks/APS%20Configuration%20for%20ADW/)
    * [Remove a Custom Extension JAR or AMP from ADP](./ADP-Tips-Tricks/Undeploy%20Custom%20Extension/)
    * [Remove AEV from your ADP](./ADP-Tips-Tricks/Remove%20AEV%20from%20ADP/)
-   * [Local Postgres Container](./ADP-Tips-Tricks/Local%20Postgres%20Container/)
+   * [Local Postgres Container with AFS](./ADP-Tips-Tricks/Local%20Postgres%20Container%20AFS/)
+   * [Local Postgres Container with a REST API](./ADP-Tips-Tricks/Local%20Postgres%20Container%20with%20REST%20API/)
 1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
 1. Keycloak - (soon to be) Formerly known as Alfresco Identity Services
    * [Configure Keycloak for Mobile Workspace](./Keycloak/Configure%20Keycloak%20for%20Mobile%20Workspace/)
