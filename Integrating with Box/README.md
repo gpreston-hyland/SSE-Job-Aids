@@ -89,7 +89,7 @@ In ADP, edit the file `data/services/process/activiti-app.properties`. Uncomment
 
 ```properties
 # Box OAuth configuration
-box.disabled=true
+box.disabled=false
 
 #client side User Authentication Apps
 box.web.client_id=<Your client id here>
