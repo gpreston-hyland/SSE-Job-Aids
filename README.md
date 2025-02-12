@@ -25,6 +25,7 @@
    * [Local Postgres Container with AFS](./ADP-Tips-Tricks/Local%20Postgres%20Container%20AFS/)
    * [Local Postgres Container with a REST API](./ADP-Tips-Tricks/Local%20Postgres%20Container%20with%20REST%20API/)
 1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
+1. [Box Integration and Use from APS](./Integrating%20with%20Box/)
 1. Keycloak - (soon to be) Formerly known as Alfresco Identity Services
    * [Configure Keycloak for Mobile Workspace](./Keycloak/Configure%20Keycloak%20for%20Mobile%20Workspace/)
    * [Customize the Login Theme](./Keycloak/Custom%20Theme/)
