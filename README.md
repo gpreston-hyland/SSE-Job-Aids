@@ -22,6 +22,7 @@
    Initialization](./ADP-Tips-Tricks/APS%20Dynamic%20Process%20Initialization/)
    * [Remove a Custom Extension JAR or AMP from ADP](./ADP-Tips-Tricks/Undeploy%20Custom%20Extension/)
    * [Remove AEV from your ADP](./ADP-Tips-Tricks/Remove%20AEV%20from%20ADP/)
+   * [AFS Server](./ADP-Tips-Tricks/AFS%20Server/)
    * [Local Postgres Container with AFS](./ADP-Tips-Tricks/Local%20Postgres%20Container%20AFS/)
    * [Local Postgres Container with a REST API](./ADP-Tips-Tricks/Local%20Postgres%20Container%20with%20REST%20API/)
 1. [Using Apache Chemistry OpenCMIS Workbench with Alfresco](./OpenCMIS/)
